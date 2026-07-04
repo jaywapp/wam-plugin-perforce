@@ -1,7 +1,6 @@
 using Wam.Core.Nodes;
 using Wam.Core.Plugins;
 using Wam.Core.Relations;
-using Wam.Core.Settings;
 using Wam.Core.ValueObjects;
 
 namespace Wam.Plugins.Perforce;
@@ -70,10 +69,17 @@ public sealed class PerforcePlugin : IWamPlugin
         new RelationTypeDefinition("perforce.submitted-to", "Submitted To", RelationDirection.Directed),
     ];
 
-    public IEnumerable<SettingsPageDescriptor> GetSettingsPages() =>
+    public IEnumerable<PluginSettingsPage> GetSettingsPages() =>
     [
-        new SettingsPageDescriptor(
-            "perforce.settings", "Perforce", "Plugins", 10,
-            typeof(PerforceSettingsViewModel))
+        new PluginSettingsPage("perforce.settings", "Perforce", "Plugins", 10,
+        [
+            new PluginSettingField("port", "P4PORT", PluginSettingKind.Text,
+                "Server address, e.g. ssl:p4.example.com:1666"),
+            new PluginSettingField("user", "P4USER", PluginSettingKind.Text),
+            new PluginSettingField("client", "P4CLIENT", PluginSettingKind.Text,
+                "Workspace name"),
+            new PluginSettingField("timeout", "Connection timeout (s)", PluginSettingKind.Integer,
+                DefaultValue: "30"),
+        ])
     ];
 }

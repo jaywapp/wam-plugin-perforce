@@ -9,7 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Wam.Core\Wam.Core.csproj" />
+    <PackageReference Include="Jaywapp.Wam.Core" Version="0.3.0">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -1,3 +1,5 @@
+using Wam.Core.Plugins;
+
 namespace Wam.Plugins.Perforce;
 
 /// <summary>
@@ -17,4 +19,17 @@ public sealed class PerforceSettings
     public string Client { get; set; } = "";
 
     public int ConnectionTimeoutSeconds { get; set; } = 30;
+
+    /// <summary>Reads this plugin's persisted settings by field key.</summary>
+    public static PerforceSettings From(IPluginSettingsStore store) =>
+        From(store.Load(PerforcePlugin.Id));
+
+    /// <summary>Maps stored schema values (see PerforcePlugin.GetSettingsPages) to the POCO.</summary>
+    public static PerforceSettings From(PluginSettingsValues v) => new()
+    {
+        Port = v.GetString("port") ?? "",
+        User = v.GetString("user") ?? "",
+        Client = v.GetString("client") ?? "",
+        ConnectionTimeoutSeconds = v.GetInt("timeout", 30),
+    };
 }

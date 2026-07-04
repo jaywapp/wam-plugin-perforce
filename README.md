@@ -37,20 +37,31 @@ WAM 캔버스의 노드와 관계로 표현합니다.
 ## 구조
 
 ```
-perforce/
+wam-plugin-perforce/
 ├── README.md
+├── nuget.config                        # 개발용 로컬 Jaywapp.Wam.Core 피드
+├── build/plugin.json                   # 매니페스트 (DLL과 함께 배포)
 └── src/
     └── Wam.Plugins.Perforce/
-        ├── PerforcePlugin.cs            # IWamPlugin: 타입·설정 페이지 선언
-        ├── PerforceSettings.cs          # 영속화되는 설정 POCO
-        ├── PerforceSettingsViewModel.cs # ISettingsPage (Apply에서 저장)
+        ├── Wam.Plugins.Perforce.csproj # Jaywapp.Wam.Core PackageReference
+        ├── PerforcePlugin.cs           # IWamPlugin: 타입·설정 스키마 선언
+        ├── PerforceSettings.cs         # 설정 POCO + 스토어 값 매핑(From)
         └── Services/
-            └── IPerforceClient.cs       # 향후 p4 연동 경계
+            └── IPerforceClient.cs      # 향후 p4 연동 경계
 ```
 
-현재는 WAM 레포 안에서 인큐베이션 중이며(`Wam.sln`의 `plugins` 솔루션 폴더),
-외부 어셈블리 로딩이 도입되면 독립 repository로 분리합니다.
-개발 규칙은 [plugins/README.md](../README.md)를 따릅니다.
+이 플러그인은 [Jaywapp.Wam.Core](https://www.nuget.org/packages/Jaywapp.Wam.Core)
+패키지 하나만 참조합니다. 호스트(WAM)와는 런타임에만 연결됩니다.
+
+## 빌드 & 설치
+
+```bash
+dotnet build -c Release
+```
+
+산출물 `bin/Release/net8.0/Wam.Plugins.Perforce.dll` 과 `build/plugin.json` 을
+`%AppData%\WAM\plugins\wam.plugin.perforce\` 에 복사한 뒤 WAM을 재시작하면
+설정 창 → Plugins → Perforce 에 나타납니다.
 
 ## 로드맵
 

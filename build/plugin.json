@@ -1,0 +1,7 @@
+{
+  "id": "wam.plugin.perforce",
+  "displayName": "Perforce",
+  "version": "0.1.0",
+  "entryAssembly": "Wam.Plugins.Perforce.dll",
+  "targetCoreVersion": "0.3.0"
+}
