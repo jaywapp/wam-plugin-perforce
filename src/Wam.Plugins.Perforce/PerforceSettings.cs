@@ -25,11 +25,11 @@ public sealed class PerforceSettings
         From(store.Load(PerforcePlugin.Id));
 
     /// <summary>Maps stored schema values (see PerforcePlugin.GetSettingsPages) to the POCO.</summary>
-    public static PerforceSettings From(PluginSettingsValues v) => new()
+    public static PerforceSettings From(PluginSettingsValues? v) => new()
     {
-        Port = v.GetString("port") ?? "",
-        User = v.GetString("user") ?? "",
-        Client = v.GetString("client") ?? "",
-        ConnectionTimeoutSeconds = v.GetInt("timeout", 30),
+        Port = v?.GetString("port") ?? "",
+        User = v?.GetString("user") ?? "",
+        Client = v?.GetString("client") ?? "",
+        ConnectionTimeoutSeconds = v?.GetInt("timeout", 30) is > 0 and var timeout ? timeout : 30,
     };
 }
